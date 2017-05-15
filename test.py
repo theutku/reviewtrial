@@ -13,7 +13,7 @@ def init_analyzer():
     twitter_listener = TwitterListener()
     twitter_listener.init_listener()
     twitterStream = Stream(twitter_listener.auth, twitter_listener)
-    twitterStream.filter(track=['happy'])
+    twitterStream.filter(track=['movie'])
 
 
 init_analyzer()

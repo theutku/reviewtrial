@@ -1,34 +1,9 @@
 from analyzer import Analyzer
 import json
 
-
-class TwitterBase:
-
-    def __init__(self):
-        self.analyzer = Analyzer()
-        self.analyzer.init_analyzer()
-
-    def connect(self):
-        return ''
-
-    def analyze_tweet(self, text):
-        feats = self.analyzer.word_processor.find_features(text)
-        for classifier in self.analyzer.classifier_base._classifiers:
-            sentiment = classifier['classifier'].classify(feats)
-            conf = classifier['classifier'].confidence(feats)
-            print('Classification: {} with Confidence: {} %'.format(
-                sentiment, conf * 100))
-            return sentiment, conf
-
-
 from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
-# import sentiment_mod as s
-
-
-# from twitterapistuff import *
-from twitterbase import TwitterBase
 
 
 class TwitterListener(StreamListener):
@@ -52,26 +27,18 @@ class TwitterListener(StreamListener):
         all_data = json.loads(data)
 
         # TO DO
-        tweet = all_data["text"]
-        sentiment_value, confidence = self.analyze_tweet(tweet)
-        print(tweet, sentiment_value, confidence)
+        if len(all_data['text']) != 0:
+            tweet = all_data["text"]
+            sentiment_value, confidence = self.analyzer.analyze_tweet(tweet)
+            print(tweet, sentiment_value, confidence)
 
-        if confidence * 100 >= 80:
-            output = open("twitter-out.txt", "a")
-            output.write(sentiment_value)
-            output.write('\n')
-            output.close()
+            if type(confidence) == float and confidence * 100 >= 80:
+                output = open("results/twitter-out.txt", "a")
+                output.write('{} --- {}'.format(tweet, sentiment_value))
+                output.write('\n')
+                output.close()
 
         return True
 
     def on_error(self, status):
         print(status)
-
-    def analyze_tweet(self, text):
-        feats = self.analyzer.word_processor.find_features(text)
-        for classifier in self.analyzer.classifier_base._classifiers:
-            sentiment = classifier['classifier'].classify(feats)
-            conf = classifier['classifier'].confidence(feats)
-            print('Classification: {} with Confidence: {} %'.format(
-                sentiment, conf * 100))
-            return sentiment, conf

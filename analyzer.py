@@ -44,3 +44,16 @@ class Analyzer:
         self.process_words()
         self.init_classifiers()
         self.init_voted_classifier(10)
+
+    def analyze_tweet(self, text):
+        feats = self.word_processor.find_features(text)
+        # for classifier in self.analyzer.classifier_base._classifiers:
+        sentiment = self.classifier_base.voted_classifier['classifier'].classify(
+            feats)
+        conf = self.classifier_base.voted_classifier['classifier'].confidence(
+            feats)
+        # if type(conf) != str:
+        #     conf = conf * 100
+        #     print('Voted Classification: {} with Confidence: {} %'.format(
+        #         sentiment, conf))
+        return sentiment, conf
