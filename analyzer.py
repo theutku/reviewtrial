@@ -38,3 +38,9 @@ class Analyzer:
     def init_voted_classifier(self, feature_count):
         features = self.word_processor.feature_sets[:feature_count]
         self.classifier_base.init_voted_classifier(features, self.testing_set)
+
+    def init_analyzer(self):
+        self.prepare_documents()
+        self.process_words()
+        self.init_classifiers()
+        self.init_voted_classifier(10)

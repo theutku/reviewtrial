@@ -1,6 +1,7 @@
 import nltk
 from nltk.tokenize import word_tokenize
 from documentprocessorbase import DocumentProcessorBase
+from classifierbase import ClassifierBase
 
 
 class WordProcessorBase(DocumentProcessorBase):
