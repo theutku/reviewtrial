@@ -39,15 +39,14 @@ class Analyzer:
         features = self.word_processor.feature_sets[:feature_count]
         self.classifier_base.init_voted_classifier(features, self.testing_set)
 
-    def init_analyzer(self):
+    def init_analyzer(self, test_amount):
         self.prepare_documents()
         self.process_words()
         self.init_classifiers()
-        self.init_voted_classifier(10)
+        self.init_voted_classifier(test_amount)
 
     def analyze_tweet(self, text):
         feats = self.word_processor.find_features(text)
-        # for classifier in self.analyzer.classifier_base._classifiers:
         sentiment = self.classifier_base.voted_classifier['classifier'].classify(
             feats)
         conf = self.classifier_base.voted_classifier['classifier'].confidence(

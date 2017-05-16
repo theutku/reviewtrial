@@ -3,7 +3,7 @@ from twitterbase import TwitterListener
 from tweepy import Stream
 
 
-def init_analyzer():
+def init_twitter_analyzer(subject):
     # nlp_analyzer = Analyzer()
     # nlp_analyzer.prepare_documents()
     # nlp_analyzer.process_words()
@@ -13,7 +13,7 @@ def init_analyzer():
     twitter_listener = TwitterListener()
     twitter_listener.init_listener()
     twitterStream = Stream(twitter_listener.auth, twitter_listener)
-    twitterStream.filter(track=['movie'])
+    twitterStream.filter(track=[subject])
 
 
-init_analyzer()
+init_twitter_analyzer('movie')

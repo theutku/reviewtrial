@@ -76,6 +76,3 @@ class ClassifierBase:
                 conf = conf * 100
             print('{} || Voted Classification: {} with Confidence: {} %'.format(feature_set[1], voted_classifier['classifier'].classify(
                 feature_set[0]), conf))
-
-    def share_classifiers(self):
-        return self._classifiers
