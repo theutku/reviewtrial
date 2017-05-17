@@ -2,3 +2,4 @@ debugenv
 .vscode
 __pycache__
 results
+*.pickle
